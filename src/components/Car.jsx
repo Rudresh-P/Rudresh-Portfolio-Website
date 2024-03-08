@@ -20,7 +20,7 @@ export default function Car({followCar}) {
 
     const [chassisBody, chassisBodyApi] = useBox(() => {
         return {
-            mass: 150,
+            mass: 200,
             args: chassisBodyArgs,
             position: position
         }

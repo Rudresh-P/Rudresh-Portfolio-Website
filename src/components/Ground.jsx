@@ -1,7 +1,8 @@
 import { usePlane, useCompoundBody } from "@react-three/cannon"
+import { ContactShadows } from "@react-three/drei"
 export default function Ground() {
 
-    const [physicsPlane, planeApi] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], position: [0, 0, 0] }))
+    const [physicsPlane, planeApi] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], position: [0, -0.01, 0] }))
 
     // Invisible Bounds
     const wallSize = [20, 2, 0.5]
@@ -49,5 +50,7 @@ export default function Ground() {
             <planeGeometry args={[100, 100]} />
             <meshStandardMaterial color="greenyellow" />
         </mesh>
+
+        <ContactShadows  />
     </>
 }

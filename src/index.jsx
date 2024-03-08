@@ -31,9 +31,9 @@ root.render(
         >
             {/* Cannon Physics and debug */}
             <Physics broadphase='SAP' gravity={[0,-2.6,0]}>
-                <Debug color="black" scale={1.01}>
+                {/* <Debug color="black" scale={1.01}> */}
                     <Experience />
-                </Debug>
+                {/* </Debug> */}
             </Physics>
         </Canvas>
     </KeyboardControls>
