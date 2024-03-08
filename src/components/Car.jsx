@@ -60,7 +60,7 @@ export default function Car({followCar}) {
             (value)=>{ 
 
                 if(value){
-                    chassisBodyApi.position.set(0,0,0)
+                    chassisBodyApi.position.set(2, 0.5, 1)
                     chassisBodyApi.velocity.set(0,0,0)
                     chassisBodyApi.angularVelocity.set(0,0,0)
                     chassisBodyApi.rotation.set(0,0,0)
