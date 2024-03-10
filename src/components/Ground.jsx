@@ -1,12 +1,12 @@
 import { usePlane, useCompoundBody } from "@react-three/cannon"
-import { ContactShadows } from "@react-three/drei"
+import { ContactShadows, useTexture } from "@react-three/drei"
 export default function Ground() {
 
     const [physicsPlane, planeApi] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], position: [0, -0.01, 0] }))
 
     // Invisible Bounds
     const wallSize = [20, 2, 0.5]
-    const wallOffset = wallSize[0]* 0.5 + 0.25
+    const wallOffset = wallSize[0] * 0.5 + 0.25
     const wallPositions = [
         [0, 1, wallOffset],
         [0, 1, -wallOffset],
@@ -16,6 +16,7 @@ export default function Ground() {
     const [_bounds] = useCompoundBody(() => ({
         mass: 0,
         position: [0, 0, 0],
+        material: { friction: 1 },
         shapes: [
             {
                 type: 'Box',
@@ -43,14 +44,14 @@ export default function Ground() {
         ],
     }))
 
-
+    const groundTexture = useTexture("https://raw.githubusercontent.com/nidorx/matcaps/master/512/D07E3F_FBBD1F_8D2840_24120C-512px.png")
     return <>
 
         <mesh ref={physicsPlane}>
             <planeGeometry args={[100, 100]} />
-            <meshStandardMaterial color="greenyellow" />
+            <meshMatcapMaterial matcap={groundTexture} />
         </mesh>
 
-        <ContactShadows  />
+        <ContactShadows scale={[wallSize[0] + 2, wallSize[0] + 2]} />
     </>
 }

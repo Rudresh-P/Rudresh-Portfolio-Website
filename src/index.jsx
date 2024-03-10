@@ -13,13 +13,15 @@ const map = [
     { name: "backward", keys: ['ArrowDown', 'KeyS'] },
     { name: "left", keys: ['ArrowLeft', 'KeyA'] },
     { name: "right", keys: ['ArrowRight', 'KeyD'] },
-    { name: "jump", keys: ['Space'] },
+    { name: "brake", keys: ['Space'] },
     { name: "reset", keys: ['KeyR'] },
 ]
 
+const debug = false
+
 root.render(
     <KeyboardControls map={map}>
-        
+
         <Canvas
             shadows
             camera={{
@@ -30,10 +32,16 @@ root.render(
             }}
         >
             {/* Cannon Physics and debug */}
-            <Physics broadphase='SAP' gravity={[0,-2.6,0]}>
-                {/* <Debug color="black" scale={1.01}> */}
+            <Physics broadphase='SAP' gravity={[0, -2.6, 0]}>
+
+                { debug ? 
+                <Debug color="black" scale={1.01}>
                     <Experience />
-                {/* </Debug> */}
+                </Debug> 
+                : 
+                <Experience />
+                }
+
             </Physics>
         </Canvas>
     </KeyboardControls>

@@ -25,6 +25,7 @@ export function Name(props) {
     const preset = {
         mass: 5,
         args: [0.19, 0.38, 0.15],
+        restitution: 0.25
         // position:[-1, 0.025, 0],
         // rotation:[Math.PI / 2, 0, 0]
 
