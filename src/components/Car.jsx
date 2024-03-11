@@ -9,10 +9,10 @@ export default function Car({ followCar }) {
 
     // Set up Initial positions and dimentions
     const position = [2, 0.5, 1]
-    const width = 0.35
-    const height = 0.25
+    const width = 0.275
+    const height = 0.08
     const front = 0.35
-    const wheelRadius = 0.165
+    const wheelRadius = 0.09
 
 
     // Create a cannon Box to be used as the Car Chassis
@@ -23,7 +23,7 @@ export default function Car({ followCar }) {
             mass: 100,
             args: chassisBodyArgs,
             position: position,
-            rotation: [0, Math.PI, 0],
+            rotation: [0, -Math.PI, 0],
         }
     }, useRef(null))
 
@@ -43,7 +43,6 @@ export default function Car({ followCar }) {
     // Load Model and get wheels
     const model = useGLTF("/racer.glb")
     useGLTF.preload("/racer.glb")
-
     const bodyMesh = model.scene.getObjectByName("car_body")
     const frontLeft = model.scene.getObjectByName("Wheel_Front_left")
     const frontRight = model.scene.getObjectByName("Wheel_front_right")
@@ -96,17 +95,13 @@ export default function Car({ followCar }) {
             camera.position.copy(smoothedCameraPosition)
             camera.lookAt(smoothedCameraTarget)
 
-
         })
 
         return () => {
             unSubscribeResetKey()
             unSubscribeChassisPosition()
         }
-    }, [followCar, vehicle])
-
-
-
+    }, [followCar])
 
     // UseFrame to run on every frame, apply foces and steering values for the vehicle
     useFrame((_state, _delta) => {
@@ -144,36 +139,27 @@ export default function Car({ followCar }) {
         // Apply Braking Force when space key is pressed
         if (brake) {
             console.log("break");
-            vehicleApi.applyEngineForce(0, 0)
-            vehicleApi.applyEngineForce(0, 1)
+            // vehicleApi.applyEngineForce(0, 0)
+            // vehicleApi.applyEngineForce(0, 1)
             vehicleApi.setBrake(2.5, 2)
             vehicleApi.setBrake(2.5, 3)
         } else {
             vehicleApi.setBrake(0, 2)
             vehicleApi.setBrake(0, 3)
         }
-
-
-
     })
 
     return <>
 
-        <Suspense fallback={ <mesh> <boxGeometry /></mesh>}>
-
+        <Suspense fallback={null}>
             <group ref={vehicle}>
-
-                <primitive object={bodyMesh} ref={chassisBody} scale={[0.05, 0.05, 0.05]} />
-                <primitive object={frontLeft} ref={wheels[0]} scale={[0.05, 0.05, 0.05]} />
-                <primitive object={frontRight} ref={wheels[1]} scale={[0.05, 0.05, 0.05]} />
-                <primitive object={rearLeft} ref={wheels[2]} scale={[0.05, 0.05, 0.05]} />
-                <primitive object={rearRight} ref={wheels[3]} scale={[0.05, 0.05, 0.05]} />
+                <primitive object={bodyMesh} ref={chassisBody} />r
+                <primitive object={frontLeft} ref={wheels[0]} scale={[0.8,0.8,0.8]}/>
+                <primitive object={frontRight} ref={wheels[1]} scale={[0.8,0.8,0.8]}/>
+                <primitive object={rearLeft} ref={wheels[2]} scale={[0.8,0.8,0.8]}/>
+                <primitive object={rearRight} ref={wheels[3]} scale={[0.8,0.8,0.8]}/>
 
             </group>
         </Suspense>
-
-
-
-
     </>
 }
