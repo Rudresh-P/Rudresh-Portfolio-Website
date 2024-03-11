@@ -85,12 +85,12 @@ export default function Car({ followCar }) {
 
             if (!followCar) return
             bodyPosition.set(pos[0], pos[1], pos[2])
-            smoothedCameraTarget.lerp(bodyPosition, 0.8)
+            smoothedCameraTarget.copy(bodyPosition)
             bodyPosition.x += 2.5
             bodyPosition.y += 4
             bodyPosition.z += 6
 
-            smoothedCameraPosition.lerp(bodyPosition, 0.1)
+            smoothedCameraPosition.lerp(bodyPosition, 0.05)
 
             camera.position.copy(smoothedCameraPosition)
             camera.lookAt(smoothedCameraTarget)
@@ -138,9 +138,6 @@ export default function Car({ followCar }) {
         }
         // Apply Braking Force when space key is pressed
         if (brake) {
-            console.log("break");
-            // vehicleApi.applyEngineForce(0, 0)
-            // vehicleApi.applyEngineForce(0, 1)
             vehicleApi.setBrake(2.5, 2)
             vehicleApi.setBrake(2.5, 3)
         } else {
