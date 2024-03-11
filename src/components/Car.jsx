@@ -1,7 +1,7 @@
 import { useBox, useRaycastVehicle } from "@react-three/cannon"
-import { Children, useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { useWheels } from "./useWheel"
-import { Gltf, useGLTF, useKeyboardControls } from "@react-three/drei"
+import { useGLTF, useKeyboardControls } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 import { Vector3 } from "three"
 
@@ -11,8 +11,8 @@ export default function Car({ followCar }) {
     const position = [2, 0.5, 1]
     const width = 0.35
     const height = 0.25
-    const front = 0.30
-    const wheelRadius = 0.15
+    const front = 0.35
+    const wheelRadius = 0.165
 
 
     // Create a cannon Box to be used as the Car Chassis
@@ -42,7 +42,13 @@ export default function Car({ followCar }) {
 
     // Load Model and get wheels
     const model = useGLTF("/racer.glb")
-    const Wheel_rear_right = model.scene.getObjectByName("Wheel_rear_right")
+    useGLTF.preload("/racer.glb")
+
+    const bodyMesh = model.scene.getObjectByName("car_body")
+    const frontLeft = model.scene.getObjectByName("Wheel_Front_left")
+    const frontRight = model.scene.getObjectByName("Wheel_front_right")
+    const rearLeft = model.scene.getObjectByName("Wheel_rear_left")
+    const rearRight = model.scene.getObjectByName("Wheel_rear_right")
 
 
     // Controls
@@ -66,18 +72,11 @@ export default function Car({ followCar }) {
             (state) => state.reset,
             (value) => {
                 if (value) {
-                    // chassisBodyApi.position.set(2, 0.5, 1)
-                    // chassisBodyApi.velocity.set(0, 0, 0)
-                    // chassisBodyApi.angularVelocity.set(0, 0, 0)
-                    // chassisBodyApi.rotation.set(0, 0, 0)
+                    chassisBodyApi.position.set(2, 0.5, 1)
+                    chassisBodyApi.velocity.set(0, 0, 0)
+                    chassisBodyApi.angularVelocity.set(0, 0, 0)
+                    chassisBodyApi.rotation.set(0, 0, 0)
                 }
-
-                if (wheels) {
-                    console.log(wheels[0].current.traverse(o => {
-                        console.log(or);
-                    }))
-                }
-
 
             }
         )
@@ -160,9 +159,19 @@ export default function Car({ followCar }) {
 
     return <>
 
-        <group ref={vehicle} >
-            <primitive ref={chassisBody} object={model.scene} scale={0.35} />
-        </group>
+        <Suspense fallback={ <mesh> <boxGeometry /></mesh>}>
+
+            <group ref={vehicle}>
+
+                <primitive object={bodyMesh} ref={chassisBody} scale={[0.05, 0.05, 0.05]} />
+                <primitive object={frontLeft} ref={wheels[0]} scale={[0.05, 0.05, 0.05]} />
+                <primitive object={frontRight} ref={wheels[1]} scale={[0.05, 0.05, 0.05]} />
+                <primitive object={rearLeft} ref={wheels[2]} scale={[0.05, 0.05, 0.05]} />
+                <primitive object={rearRight} ref={wheels[3]} scale={[0.05, 0.05, 0.05]} />
+
+            </group>
+        </Suspense>
+
 
 
 
