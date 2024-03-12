@@ -5,6 +5,15 @@ import { useBox, useSphere } from "@react-three/cannon";
 export function Bowling(props) {
     const { nodes, materials } = useGLTF("/bowling.glb");
 
+    // create a ref and api for the sphere
+    const [sphere, sphereApi] = useSphere(() => ({
+        mass: 15,
+        args: [0.262],
+        position: [-6.084, 1, 4.656]
+    }), useRef(null))
+
+
+    // creating a list of position for all the pins
     const pinPositions = [
         [-14.199, 0.3, 4.657],
         [-14.422, 0.3, 4.504],
@@ -16,39 +25,50 @@ export function Bowling(props) {
         [-14.876, 0.3, 4.799],
         [-14.872, 0.3, 4.499],
         [-14.869, 0.3, 4.199]
-]
+    ]
+
+    // array to hold all the refs and apis for the pins
+    const pinRefs = []
+
+    // Push a object with the ref and the api created by the useBox for all pins using pinPositions array
+    pinPositions.forEach((val) => {
+
+        const [ref, refApi] = useBox(() => ({
+            position: val,
+            mass: 2,
+            args: [0.15, 0.7, 0.15]
+        }), useRef(null))
+
+        pinRefs.push({ pin: ref, pinApi: refApi })
+    })
 
 
-        const pinRefs = [] 
-        
-        pinPositions.forEach((val)=>{
+    // Function to reset the sphere and the pins to the initial position
+    const resetPins = ()=>{
+        sphereApi.position.set(-6.084, 1, 4.656)
+        sphereApi.velocity.set(0, 0, 0)
+        sphereApi.angularVelocity.set(0, 0, 0)
+        sphereApi.rotation.set(0, 0, 0)
 
-            const [ ref , refApi] = useBox( ()=>({
-                position:val,
-                mass:2,
-                args:[0.15,0.7,0.15]
-            }),useRef(null))
+        if (pinRefs.length > 0){
+            pinRefs.forEach((val,i)=>{
+                const [x,y,z] = pinPositions[i]
+                val.pinApi.position.set(x,y,z)
+                val.pinApi.velocity.set(0, 0, 0)
+                val.pinApi.angularVelocity.set(0, 0, 0)
+                val.pinApi.rotation.set(0, 0, 0)
+            })
+        }
+    }
 
-            pinRefs.push({ pin:ref, pinApi: refApi})
-        })
-
-    
-
-    
-
-    const [sphere] = useSphere(() => ({
-        mass: 10,
-        args: [0.262],
-        position: [-6.084, 1, 4.656]
-    }), useRef(null))
     return (
         <group {...props} dispose={null}>
 
-            <group position={[-6.084, 0, 3]}>
+            {/* PlaceHolder button for the Reset Function */}
+            <group position={[-6.084, 0, 3]} onClick={resetPins}>
                 <mesh >
                     <boxGeometry args={[0.25, 0.05, 0.25]} />
                 </mesh>
-
             </group>
 
             <mesh
@@ -56,12 +76,10 @@ export function Bowling(props) {
 
                 geometry={nodes.Sphere.geometry}
                 material={materials["Material.006"]}
-                // position={[-6.084, 0, 4.656]}
-                // rotation={[Math.PI, -0.836, Math.PI]}
                 scale={0.262}
             />
             <group
-            ref={pinRefs[0].pin}
+                ref={pinRefs[0].pin}
                 position={[-14.199, 0, 4.657]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -76,7 +94,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[1].pin}
+                ref={pinRefs[1].pin}
                 position={[-14.422, 0, 4.504]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -91,7 +109,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[2].pin}
+                ref={pinRefs[2].pin}
                 position={[-14.426, 0, 4.804]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -106,7 +124,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[3].pin}
+                ref={pinRefs[3].pin}
                 position={[-14.652, 0, 4.951]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -121,7 +139,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[4].pin}
+                ref={pinRefs[4].pin}
                 position={[-14.649, 0, 4.652]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -136,7 +154,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[5].pin}
+                ref={pinRefs[5].pin}
                 position={[-14.645, 0, 4.351]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -151,7 +169,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[6].pin}
+                ref={pinRefs[6].pin}
                 position={[-14.879, 0, 5.099]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -166,7 +184,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[7].pin}
+                ref={pinRefs[7].pin}
                 position={[-14.876, 0, 4.799]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -181,7 +199,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[8].pin}
+                ref={pinRefs[8].pin}
                 position={[-14.872, 0, 4.499]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -196,7 +214,7 @@ export function Bowling(props) {
                 />
             </group>
             <group
-            ref={pinRefs[9].pin}
+                ref={pinRefs[9].pin}
                 position={[-14.869, 0, 4.199]}
                 rotation={[0, 1.559, 0]}
                 scale={0.114}
@@ -210,7 +228,6 @@ export function Bowling(props) {
                     material={materials["Material.002"]}
                 />
             </group>
-
 
         </group>
     );
