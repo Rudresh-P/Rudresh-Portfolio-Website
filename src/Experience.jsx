@@ -5,6 +5,7 @@ import Car from './components/Car.jsx'
 import { Name } from './components/Name.jsx'
 import { useControls } from "leva";
 import { Suspense } from 'react'
+import { Bowling } from './components/Bowling.jsx'
 
 export default function Experience() {
 
@@ -19,6 +20,7 @@ export default function Experience() {
         <Suspense fallback={null}>
         <Car followCar={followCar}/>
         </Suspense>
+        <Bowling />
         <Name />
         <Ground />
     </>

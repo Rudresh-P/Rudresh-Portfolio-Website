@@ -5,7 +5,7 @@ export default function Ground() {
     const [physicsPlane, planeApi] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], position: [0, -0.01, 0] }))
 
     // Invisible Bounds
-    const wallSize = [20, 2, 0.5]
+    const wallSize = [40, 2, 0.5]
     const wallOffset = wallSize[0] * 0.5 + 0.25
     const wallPositions = [
         [0, 1, wallOffset],
