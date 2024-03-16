@@ -148,15 +148,14 @@ export default function Car({ followCar }) {
 
     return <>
 
-        <Suspense fallback={null}>
-            <group ref={vehicle}>
-                <primitive object={bodyMesh} ref={chassisBody} />r
-                <primitive object={frontLeft} ref={wheels[0]} scale={[0.8,0.8,0.8]}/>
-                <primitive object={frontRight} ref={wheels[1]} scale={[0.8,0.8,0.8]}/>
-                <primitive object={rearLeft} ref={wheels[2]} scale={[0.8,0.8,0.8]}/>
-                <primitive object={rearRight} ref={wheels[3]} scale={[0.8,0.8,0.8]}/>
 
-            </group>
-        </Suspense>
+        <group ref={vehicle}>
+            <primitive object={bodyMesh} ref={chassisBody} />r
+            <primitive object={frontLeft} ref={wheels[0]} scale={[0.8, 0.8, 0.8]} />
+            <primitive object={frontRight} ref={wheels[1]} scale={[0.8, 0.8, 0.8]} />
+            <primitive object={rearLeft} ref={wheels[2]} scale={[0.8, 0.8, 0.8]} />
+            <primitive object={rearRight} ref={wheels[3]} scale={[0.8, 0.8, 0.8]} />
+        </group>
+
     </>
 }

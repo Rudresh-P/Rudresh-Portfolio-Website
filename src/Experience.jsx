@@ -17,9 +17,7 @@ export default function Experience() {
 
         {!followCar && <OrbitControls makeDefault />}
         <Lights />
-        <Suspense fallback={null}>
         <Car followCar={followCar}/>
-        </Suspense>
         <Bowling />
         <Name />
         <Ground />

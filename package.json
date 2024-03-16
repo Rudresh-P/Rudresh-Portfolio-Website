@@ -19,6 +19,7 @@
     "r3f-perf": "^7.1.2",
     "react": "18.2",
     "react-dom": "18.2",
+    "react-joystick-component": "^6.2.1",
     "three": "^0.153.0"
   }
 }

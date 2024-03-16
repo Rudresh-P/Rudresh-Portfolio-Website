@@ -4,6 +4,8 @@ import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
 import { Debug, Physics } from '@react-three/cannon'
 import { KeyboardControls } from '@react-three/drei'
+import { Suspense } from 'react'
+import LoadingScreen from './components/LoadingScreen.jsx'
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 
@@ -17,7 +19,7 @@ const map = [
     { name: "reset", keys: ['KeyR'] },
 ]
 
-const debug = false
+const debug = true
 
 root.render(
     <KeyboardControls map={map}>
@@ -34,6 +36,8 @@ root.render(
             {/* Cannon Physics and debug */}
             <Physics broadphase='SAP' gravity={[0, -2.6, 0]}>
 
+                <Suspense fallback={null}>
+
                 { debug ? 
                 <Debug color="black" scale={1.01}>
                     <Experience />
@@ -42,8 +46,12 @@ root.render(
                 <Experience />
                 }
 
+                </Suspense>
+
+
             </Physics>
         </Canvas>
+        <LoadingScreen />
     </KeyboardControls>
 
 )
