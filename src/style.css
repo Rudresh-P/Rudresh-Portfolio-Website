@@ -7,5 +7,29 @@ body,
     left: 0;
     width: 100%;
     height: 100%;
-    background: ivory;
+    background: rgb(0, 0, 0);
+}
+
+.webgl_canvas{
+    background-color: rgb(0, 0, 0);
+}
+
+.loading_screen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: aliceblue;
+}
+
+.loading_screen > button {
+    width: 15vw;
+    height: 15vw;
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

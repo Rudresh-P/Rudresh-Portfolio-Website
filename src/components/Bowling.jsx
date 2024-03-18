@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useGLTF, Text } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useBox, useSphere } from "@react-three/cannon";
 
 export function Bowling(props) {
@@ -44,16 +44,16 @@ export function Bowling(props) {
 
 
     // Function to reset the sphere and the pins to the initial position
-    const resetPins = ()=>{
+    const resetPins = () => {
         sphereApi.position.set(-6.084, 1, 4.656)
         sphereApi.velocity.set(0, 0, 0)
         sphereApi.angularVelocity.set(0, 0, 0)
         sphereApi.rotation.set(0, 0, 0)
 
-        if (pinRefs.length > 0){
-            pinRefs.forEach((val,i)=>{
-                const [x,y,z] = pinPositions[i]
-                val.pinApi.position.set(x,y,z)
+        if (pinRefs.length > 0) {
+            pinRefs.forEach((val, i) => {
+                const [x, y, z] = pinPositions[i]
+                val.pinApi.position.set(x, y, z)
                 val.pinApi.velocity.set(0, 0, 0)
                 val.pinApi.angularVelocity.set(0, 0, 0)
                 val.pinApi.rotation.set(0, 0, 0)

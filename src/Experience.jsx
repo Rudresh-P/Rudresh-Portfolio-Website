@@ -6,10 +6,12 @@ import { Name } from './components/Name.jsx'
 import { useControls } from "leva";
 import { Suspense } from 'react'
 import { Bowling } from './components/Bowling.jsx'
+import { useReady } from './components/useGame.jsx'
 
 export default function Experience() {
 
     const {followCar} = useControls({followCar:true})
+    const isReady = useReady( state => state.isReady)
 
      
 
@@ -17,7 +19,7 @@ export default function Experience() {
 
         {!followCar && <OrbitControls makeDefault />}
         <Lights />
-        <Car followCar={followCar}/>
+        {isReady && <Car followCar={followCar}/> }
         <Bowling />
         <Name />
         <Ground />

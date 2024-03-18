@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
 import { Debug, Physics } from '@react-three/cannon'
 import { KeyboardControls } from '@react-three/drei'
-import { Suspense } from 'react'
+import { StrictMode, Suspense, useState } from 'react'
 import LoadingScreen from './components/LoadingScreen.jsx'
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -21,37 +21,42 @@ const map = [
 
 const debug = true
 
+// const [showLoadingScreen] = useState(false)
+
 root.render(
-    <KeyboardControls map={map}>
+    <StrictMode>
+        <KeyboardControls map={map}>
 
-        <Canvas
-            shadows
-            camera={{
-                fov: 45,
-                near: 0.1,
-                far: 200,
-                position: [2.5, 4, 6]
-            }}
-        >
-            {/* Cannon Physics and debug */}
-            <Physics broadphase='SAP' gravity={[0, -2.6, 0]}>
+            <Canvas
+                className='webgl_canvas'
+                shadows
+                camera={{
+                    fov: 45,
+                    near: 0.1,
+                    far: 200,
+                    position: [2.5, 4, 6]
+                }}
+            >
+                {/* Cannon Physics and debug */}
+                <Physics broadphase='SAP' gravity={[0, -2.6, 0]}>
 
-                <Suspense fallback={null}>
+                    <Suspense fallback={null}>
 
-                { debug ? 
-                <Debug color="black" scale={1.01}>
-                    <Experience />
-                </Debug> 
-                : 
-                <Experience />
-                }
+                        {debug ?
+                            <Debug color="black" scale={1.01}>
+                                <Experience />
+                            </Debug>
+                            :
+                            <Experience />
+                        }
 
-                </Suspense>
+                    </Suspense>
 
 
-            </Physics>
-        </Canvas>
-        <LoadingScreen />
-    </KeyboardControls>
+                </Physics>
+            </Canvas>
+            <LoadingScreen />
+        </KeyboardControls>
+    </StrictMode>
 
 )
